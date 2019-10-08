@@ -64,6 +64,10 @@ BEGIN_MESSAGE_MAP(CYHKim22Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTT_OK, &CYHKim22Dlg::OnBnClickedButtOk)
+	ON_BN_CLICKED(IDC_BUTT_EXIT, &CYHKim22Dlg::OnBnClickedButtExit)
+	ON_BN_CLICKED(IDC_BUTT_ENABLE, &CYHKim22Dlg::OnBnClickedButtEnable)
+	ON_BN_CLICKED(IDC_BUTT_SHOW, &CYHKim22Dlg::OnBnClickedButtShow)
 END_MESSAGE_MAP()
 
 
@@ -152,3 +156,39 @@ HCURSOR CYHKim22Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CYHKim22Dlg::OnBnClickedButtOk()
+{
+	MessageBox(_T("MFC 시작합니다."), _T("안내"), MB_OKCANCEL);
+}
+
+
+void CYHKim22Dlg::OnBnClickedButtExit()
+{
+	OnOK();
+}
+
+
+void CYHKim22Dlg::OnBnClickedButtEnable()
+{
+	static int toggle = 1;
+	toggle = !toggle;
+	if (toggle) {
+		GetDlgItem(IDC_BUTT_OK)->EnableWindow(TRUE);
+	}
+	else
+		GetDlgItem(IDC_BUTT_OK)->EnableWindow(FALSE);
+}
+
+
+void CYHKim22Dlg::OnBnClickedButtShow()
+{
+	static int toggle2 = 1;
+	toggle2 = !toggle2;
+	if (toggle2) {
+		GetDlgItem(IDC_BUTT_OK)->ShowWindow(TRUE);
+	}
+	else
+		GetDlgItem(IDC_BUTT_OK)->ShowWindow(FALSE);
+}
