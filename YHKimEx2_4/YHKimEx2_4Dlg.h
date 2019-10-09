@@ -39,5 +39,4 @@ public:
 	BOOL m_4;
 	CComboBox m_ctlCombo;
 	afx_msg void OnBnClickedButtOk();
-	afx_msg void OnCbnSelchangeCombo();
 };
