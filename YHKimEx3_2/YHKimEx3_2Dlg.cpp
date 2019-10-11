@@ -58,14 +58,15 @@ CYHKimEx32Dlg::CYHKimEx32Dlg(CWnd* pParent /*=nullptr*/)
 void CYHKimEx32Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_LIST, m_ctlList);
 }
 
 BEGIN_MESSAGE_MAP(CYHKimEx32Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTT_PAINT, &CYHKimEx32Dlg::OnBnClickedButtPaint)
+	ON_BN_CLICKED(IDC_BUTT_RED, &CYHKimEx32Dlg::OnBnClickedButtRed)
+	ON_BN_CLICKED(IDC_BUTT_BLUE, &CYHKimEx32Dlg::OnBnClickedButtBlue)
+	ON_BN_CLICKED(IDC_BUTT_GREEN, &CYHKimEx32Dlg::OnBnClickedButtGreen)
 END_MESSAGE_MAP()
 
 
@@ -101,12 +102,7 @@ BOOL CYHKimEx32Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	m_ctlList.AddString(_T("HS_BDIAGONAL"));
-	m_ctlList.AddString(_T("HS_CROSS"));
-	m_ctlList.AddString(_T("HS_DIAGCROSS"));
-	m_ctlList.AddString(_T("HS_FDIAGONAL"));
-	m_ctlList.AddString(_T("HS_HORIZONTAL"));
-	m_ctlList.AddString(_T("HS_VERTICAL"));
+
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -161,65 +157,40 @@ HCURSOR CYHKimEx32Dlg::OnQueryDragIcon()
 
 
 
-void CYHKimEx32Dlg::OnBnClickedButtPaint()
+void CYHKimEx32Dlg::OnBnClickedButtRed()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	int i;
-	CString str;
-	UpdateData(TRUE);
-	i = m_ctlList.GetCurSel();
-	if (i == 0) {
-		CClientDC dc(this);
-		CBrush brush;
-		brush.CreateHatchBrush(HS_BDIAGONAL, RGB(0, 0, 0));
-		CBrush *oldBrush = dc.SelectObject(&brush);
-		dc.Rectangle(100, 100, 200, 200);
-		dc.SelectObject(oldBrush);
-		brush.DeleteObject();
-	}
-	else if (i == 1) {
-		CClientDC dc(this);
-		CBrush brush;
-		brush.CreateHatchBrush(HS_CROSS, RGB(0, 0, 0));
-		CBrush *oldBrush = dc.SelectObject(&brush);
-		dc.Rectangle(100, 100, 200, 200);
-		dc.SelectObject(oldBrush);
-		brush.DeleteObject();
-	}
-	else if (i == 2) {
-		CClientDC dc(this);
-		CBrush brush;
-		brush.CreateHatchBrush(HS_DIAGCROSS, RGB(0, 0, 0));
-		CBrush *oldBrush = dc.SelectObject(&brush);
-		dc.Rectangle(100, 100, 200, 200);
-		dc.SelectObject(oldBrush);
-		brush.DeleteObject();
-	}
-	else if (i == 3) {
-		CClientDC dc(this);
-		CBrush brush;
-		brush.CreateHatchBrush(HS_FDIAGONAL, RGB(0, 0, 0));
-		CBrush *oldBrush = dc.SelectObject(&brush);
-		dc.Rectangle(100, 100, 200, 200);
-		dc.SelectObject(oldBrush);
-		brush.DeleteObject();
-	}
-	else if (i == 4) {
-		CClientDC dc(this);
-		CBrush brush;
-		brush.CreateHatchBrush(HS_HORIZONTAL, RGB(0, 0, 0));
-		CBrush *oldBrush = dc.SelectObject(&brush);
-		dc.Rectangle(100, 100, 200, 200);
-		dc.SelectObject(oldBrush);
-		brush.DeleteObject();
-	}
-	else if (i == 5) {
-		CClientDC dc(this);
-		CBrush brush;
-		brush.CreateHatchBrush(HS_VERTICAL, RGB(0, 0, 0));
-		CBrush *oldBrush = dc.SelectObject(&brush);
-		dc.Rectangle(100, 100, 200, 200);
-		dc.SelectObject(oldBrush);
-		brush.DeleteObject();
-	}
+	CClientDC dc(this);
+	CBrush brush;
+	brush.CreateSolidBrush(RGB(255, 0, 0));
+	CBrush * oldBrush = dc.SelectObject(&brush);
+	dc.Ellipse(100, 100, 200, 200);
+	dc.SelectObject(oldBrush);
+	brush.DeleteObject();
+}
+
+
+void CYHKimEx32Dlg::OnBnClickedButtBlue()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CClientDC dc(this);
+	CBrush brush;
+	brush.CreateSolidBrush(RGB(0, 0, 255));
+	CBrush * oldBrush = dc.SelectObject(&brush);
+	dc.Ellipse(100, 100, 200, 200);
+	dc.SelectObject(oldBrush);
+	brush.DeleteObject();
+}
+
+
+void CYHKimEx32Dlg::OnBnClickedButtGreen()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CClientDC dc(this);
+	CBrush brush;
+	brush.CreateSolidBrush(RGB(0, 255, 0));
+	CBrush * oldBrush = dc.SelectObject(&brush);
+	dc.Ellipse(100, 100, 200, 200);
+	dc.SelectObject(oldBrush);
+	brush.DeleteObject();
 }

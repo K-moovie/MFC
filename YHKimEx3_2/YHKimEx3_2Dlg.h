@@ -32,6 +32,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	CListBox m_ctlList;
-	afx_msg void OnBnClickedButtPaint();
+	afx_msg void OnBnClickedButtRed();
+	afx_msg void OnBnClickedButtBlue();
+	afx_msg void OnBnClickedButtGreen();
 };
