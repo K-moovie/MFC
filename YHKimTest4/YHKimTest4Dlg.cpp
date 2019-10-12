@@ -178,17 +178,17 @@ void CYHKimTest4Dlg::OnBnClickedButtAdd()
 
 	if (m_c1 == TRUE && m_c2 == FALSE && m_c3 == FALSE && m_c4 == FALSE)
 		str += c1;
-	if ((m_c1 == TRUE) && (m_c2 == TRUE || m_c3 == TRUE || m_c4 == TRUE))
+	else if ((m_c1 == TRUE))
 		str = str + c1 + rest;
 
 	if (m_c2 == TRUE && m_c3 == FALSE && m_c4 == FALSE)
 		str += c2;
-	if (m_c2 == TRUE && ( m_c3 == TRUE || m_c4 == TRUE))
+	else if (m_c2 == TRUE)
 		str = str + c2 + rest;
 
 	if (m_c3 == TRUE && m_c4 == FALSE)
 		str += c3;
-	if (m_c3 == TRUE &&  m_c4 == TRUE)
+	else if (m_c3 == TRUE)
 		str = str + c3 + rest;
 	if (m_c4 == TRUE)
 		str += c4;
