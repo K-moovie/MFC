@@ -190,7 +190,6 @@ void CYHKimTest4Dlg::OnBnClickedButtAdd()
 		str += c3;
 	if (m_c3 == TRUE &&  m_c4 == TRUE)
 		str = str + c3 + rest;
-
 	if (m_c4 == TRUE)
 		str += c4;
 	m_ctlList.AddString(str);
