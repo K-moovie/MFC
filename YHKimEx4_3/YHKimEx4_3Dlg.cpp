@@ -1,12 +1,11 @@
 ﻿
-// YHKimEx4_1Dlg.cpp: 구현 파일
+// YHKimEx4_3Dlg.cpp: 구현 파일
 //
 
 #include "stdafx.h"
-#include "YHKimEx4_1.h"
-#include "YHKimEx4_1Dlg.h"
+#include "YHKimEx4_3.h"
+#include "YHKimEx4_3Dlg.h"
 #include "afxdialogex.h"
-#include "Cpopup.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,6 +30,8 @@ public:
 // 구현입니다.
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -43,36 +44,44 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-END_MESSAGE_MAP()
-
-
-// CYHKimEx41Dlg 대화 상자
-
-
-
-CYHKimEx41Dlg::CYHKimEx41Dlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_YHKIMEX4_1_DIALOG, pParent)
-{
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-}
-
-void CYHKimEx41Dlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
-}
-
-BEGIN_MESSAGE_MAP(CYHKimEx41Dlg, CDialogEx)
-	ON_WM_SYSCOMMAND()
-	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
-	ON_COMMAND(ID_PAINT, &CYHKimEx41Dlg::OnModalPaint)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
-// CYHKimEx41Dlg 메시지 처리기
+// CYHKimEx43Dlg 대화 상자
 
-BOOL CYHKimEx41Dlg::OnInitDialog()
+
+
+CYHKimEx43Dlg::CYHKimEx43Dlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_YHKIMEX4_3_DIALOG, pParent)
+	, m_1(0)
+	, m_2(0)
+	, m_3(_T(""))
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CYHKimEx43Dlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST, m_ctlList);
+	DDX_Text(pDX, IDC_EDIT1, m_1);
+	DDX_Text(pDX, IDC_EDIT2, m_2);
+	DDX_Text(pDX, IDC_EDIT3, m_3);
+}
+
+BEGIN_MESSAGE_MAP(CYHKimEx43Dlg, CDialogEx)
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTT_INPUT, &CYHKimEx43Dlg::OnBnClickedButtInput)
+	ON_WM_TIMER()
+END_MESSAGE_MAP()
+
+
+// CYHKimEx43Dlg 메시지 처리기
+
+BOOL CYHKimEx43Dlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -106,7 +115,7 @@ BOOL CYHKimEx41Dlg::OnInitDialog()
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
-void CYHKimEx41Dlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CYHKimEx43Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -123,7 +132,7 @@ void CYHKimEx41Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
-void CYHKimEx41Dlg::OnPaint()
+void CYHKimEx43Dlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -150,39 +159,57 @@ void CYHKimEx41Dlg::OnPaint()
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
-HCURSOR CYHKimEx41Dlg::OnQueryDragIcon()
+HCURSOR CYHKimEx43Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CYHKimEx41Dlg::OnTimer(UINT_PTR nIDEvent)
+void CYHKimEx43Dlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	CDialogEx::OnTimer(nIDEvent);
-	CClientDC dc(this);
 
+	CDialogEx::OnTimer(nIDEvent);
 	switch (nIDEvent)
 	{
 	case 0:
-		dc.Ellipse(100, 100, 200, 200);
+		MessageBox(str);
 		break;
 	case 1:
-		Invalidate(TRUE);
+		KillTimer(0);
+		OnClose();
 		break;
 	}
 }
 
-void CYHKimEx41Dlg::OnModalPaint()
+void CYHKimEx43Dlg::OnBnClickedButtInput()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	CPopup PopupDialog;
-	if (PopupDialog.DoModal() == IDOK)
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	int h, m;
+	CTime t1 = CTime::GetCurrentTime();
+	h = t1.GetHour();
+	m = t1.GetMinute();
+//	CString h1;
+//	h1.Format(_T("%d"), m);
+//	MessageBox(h1);
+
+	if (m_2 > m)
 	{
-		UpdateData(TRUE);
-		SetTimer(ID_TIMER_A, 1000 * (PopupDialog.m_input), NULL);
-		SetTimer(ID_TIMER_B, 1000 * (PopupDialog.m_input) + 300, NULL);
+		--h;
+		m += 60;
 	}
+	h = m_1 - h; m = m_2 - m;
+	m = h * 60 + m;
+
+	str.Format(_T("%d시 %d분   "), m_1, m_2);
+	str += m_3;
+	m_ctlList.AddString(str);
+	SetTimer(0, 6000 , NULL);
+	SetTimer(1, 6000 + 500, NULL);
 }
+
+
+
 
 
 
