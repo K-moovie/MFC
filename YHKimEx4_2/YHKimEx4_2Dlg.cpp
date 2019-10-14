@@ -144,6 +144,8 @@ void CYHKimEx42Dlg::OnPaint()
 	else
 	{
 		CDialogEx::OnPaint();
+		CClientDC dc(this);
+		dc.Rectangle(100 - x, 100 - x, 100 + x, 100 + x);
 	}
 }
 
@@ -157,36 +159,34 @@ HCURSOR CYHKimEx42Dlg::OnQueryDragIcon()
 void CYHKimEx42Dlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	CDialogEx::OnTimer(nIDEvent);
-	CClientDC dc(this);
-	if (nIDEvent == 1)
-		Invalidate();
+	CDialogEx::OnTimer(nIDEvent);		
 	if (x == 100)
 		i = 0;
 	else if (x == 0)
 		i = 1;
+
 	switch (i) {
 	case 0:
+		Invalidate(TRUE);
 		x -= 5;
 		break;
 	case 1:
+		Invalidate(TRUE);
 		x += 5;
 		break;
 	}
-	dc.Rectangle(100-x, 100-x, 100 + x, 100 + x);
 }
-
 
 void CYHKimEx42Dlg::OnRect()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CPopup PopupDialog;
-	SetTimer(0, 100, NULL);
-	SetTimer(1, 99, NULL);
+	PopupDialog.m_input = 1;
+	UpdateData(FALSE);
 	if (PopupDialog.DoModal() == IDOK)
 	{
 		UpdateData(TRUE);
-		SetTimer(0, 1000, NULL);
+		SetTimer(0, 100 * PopupDialog.m_input, NULL);
 	}
 
 }
