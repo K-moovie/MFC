@@ -37,4 +37,8 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	int width = 1;
 	int i = 0;
+	int s_timer = 1;
+	//CPoint mouse;
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 };

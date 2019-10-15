@@ -6,6 +6,7 @@
 #include "YHKimTest5.h"
 #include "YHKimTest5Dlg.h"
 #include "afxdialogex.h"
+#include "CPopup.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -67,6 +68,8 @@ BEGIN_MESSAGE_MAP(CYHKimTest5Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTT_START, &CYHKimTest5Dlg::OnBnClickedButtStart)
 	ON_BN_CLICKED(IDC_BUTT_STOP, &CYHKimTest5Dlg::OnBnClickedButtStop)
 	ON_WM_TIMER()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
@@ -191,7 +194,7 @@ void CYHKimTest5Dlg::OnBnClickedButtStart()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
-	SetTimer(0, 10, NULL);
+	SetTimer(0, 10 * s_timer, NULL);
 }
 
 
@@ -204,3 +207,35 @@ void CYHKimTest5Dlg::OnBnClickedButtStop()
 
 
 
+
+
+void CYHKimTest5Dlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CDialogEx::OnLButtonDown(nFlags, point);
+	if (point.x >= 50 && point.x <= 150 && point.y >= 50 && point.y <= 150)
+	{
+		CPopup PopupDialog;
+		if (PopupDialog.DoModal() == IDOK)
+		{
+			s_timer = PopupDialog.m_input;
+		}
+	}
+}
+
+
+void CYHKimTest5Dlg::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CDialogEx::OnRButtonDown(nFlags, point);
+	if (point.x >= 50 && point.x <= 150 && point.y >= 50 && point.y <= 150)
+	{
+		CPopup PopupDialog;
+		if (PopupDialog.DoModal() == IDOK)
+		{
+			s_timer = PopupDialog.m_input;
+		}
+	}
+}
