@@ -30,8 +30,6 @@ public:
 // 구현입니다.
 protected:
 	DECLARE_MESSAGE_MAP()
-public:
-	
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -44,7 +42,6 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -54,9 +51,9 @@ END_MESSAGE_MAP()
 
 CYHKimEx43Dlg::CYHKimEx43Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_YHKIMEX4_3_DIALOG, pParent)
-	, m_1(0)
-	, m_2(0)
-	, m_3(_T(""))
+	, m_h(0)
+	, m_memo(_T(""))
+	, m_m(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -64,10 +61,11 @@ CYHKimEx43Dlg::CYHKimEx43Dlg(CWnd* pParent /*=nullptr*/)
 void CYHKimEx43Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_LIST, m_ctlList);
-	DDX_Text(pDX, IDC_EDIT1, m_1);
-	DDX_Text(pDX, IDC_EDIT2, m_2);
-	DDX_Text(pDX, IDC_EDIT3, m_3);
+	DDX_Control(pDX, IDC_LIST1, m_ctlList);
+	DDX_Text(pDX, IDC_EDIT1, m_h);
+	//  DDX_Text(pDX, IDC_EDIT2, m_m);
+	DDX_Text(pDX, IDC_EDIT3, m_memo);
+	DDX_Text(pDX, IDC_EDIT2, m_m);
 }
 
 BEGIN_MESSAGE_MAP(CYHKimEx43Dlg, CDialogEx)
@@ -111,7 +109,8 @@ BOOL CYHKimEx43Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
+	m_pDlg = new CModalless;
+	m_pDlg->Create(IDD_DIALOG);
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -168,16 +167,20 @@ void CYHKimEx43Dlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
+	
+	
 	CDialogEx::OnTimer(nIDEvent);
-	switch (nIDEvent)
+	if (nIDEvent == 0)
 	{
-	case 0:
-		MessageBox(str);
-		break;
-	case 1:
+		m_pDlg->str1 = str;
+		m_pDlg->ShowWindow(SW_SHOW);
+		
+	}
+
+	else if (nIDEvent == 1)
+	{
 		KillTimer(0);
-		OnClose();
-		break;
+		m_pDlg->ShowWindow(SW_HIDE);
 	}
 }
 
@@ -185,31 +188,21 @@ void CYHKimEx43Dlg::OnBnClickedButtInput()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	int h, m;
+	str.Format(_T("%d시 %d분   "), m_h, m_m);
+	str += m_memo;
+	m_ctlList.AddString(str);
+	int h = 0, m = 0;
 	CTime t1 = CTime::GetCurrentTime();
 	h = t1.GetHour();
 	m = t1.GetMinute();
-//	CString h1;
-//	h1.Format(_T("%d"), m);
-//	MessageBox(h1);
 
-	if (m_2 > m)
+	if (m_m > m)
 	{
-		--h;
-		m += 60;
+		--h; m += 60;
 	}
-	h = m_1 - h; m = m_2 - m;
-	m = h * 60 + m;
+	h = m_h - h; m = m_m - m;
+	m = h * 60 + m-1;
 
-	str.Format(_T("%d시 %d분   "), m_1, m_2);
-	str += m_3;
-	m_ctlList.AddString(str);
-	SetTimer(0, 6000 , NULL);
-	SetTimer(1, 6000 + 500, NULL);
+	SetTimer(0, 60000 * m, NULL);
+	SetTimer(1, 60000*m + 60000, NULL);
 }
-
-
-
-
-
-

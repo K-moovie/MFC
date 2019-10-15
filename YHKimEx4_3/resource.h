@@ -7,7 +7,8 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_YHKIMEX4_3_DIALOG           102
 #define IDR_MAINFRAME                   128
-#define IDC_LIST                        1000
+#define IDD_DIALOG                      130
+#define IDC_LIST1                       1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT2                       1002
 #define IDC_EDIT3                       1003

@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "CModalless.h"
 
 // CYHKimEx43Dlg 대화 상자
 class CYHKimEx43Dlg : public CDialogEx
@@ -33,10 +33,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CListBox m_ctlList;
-	int m_1;
-	int m_2;
-	CString m_3;
-	CString str;
+	int m_h;
+//	CString m_m;
+	CString m_memo;
 	afx_msg void OnBnClickedButtInput();
+	int m_m;
+	CModalless *m_pDlg;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CString str;
 };

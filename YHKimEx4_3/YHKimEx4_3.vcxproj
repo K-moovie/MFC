@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{17670A13-342E-4D39-93E7-524F316EB22C}</ProjectGuid>
+    <ProjectGuid>{8343CAFF-91F4-4370-8CA8-78AF80A449FE}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>YHKimEx43</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CModalless.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="YHKimEx4_3Dlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CModalless.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
