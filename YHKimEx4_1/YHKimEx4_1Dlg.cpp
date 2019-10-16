@@ -102,7 +102,7 @@ BOOL CYHKimEx41Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
+	toggle = FALSE;
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -160,16 +160,13 @@ void CYHKimEx41Dlg::OnTimer(UINT_PTR nIDEvent)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CDialogEx::OnTimer(nIDEvent);
 	CClientDC dc(this);
+	toggle = !toggle;
 
-	switch (nIDEvent)
-	{
-	case 0:
-		dc.Ellipse(100, 100, 200, 200);
-		break;
-	case 1:
+	if(toggle)
+		dc.Ellipse(50, 50, 150, 150);
+	else
 		Invalidate(TRUE);
-		break;
-	}
+
 }
 
 void CYHKimEx41Dlg::OnModalPaint()
@@ -180,7 +177,6 @@ void CYHKimEx41Dlg::OnModalPaint()
 	{
 		UpdateData(TRUE);
 		SetTimer(ID_TIMER_A, 1000 * (PopupDialog.m_input), NULL);
-		SetTimer(ID_TIMER_B, 1000 * (PopupDialog.m_input) + 300, NULL);
 	}
 }
 

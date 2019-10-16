@@ -34,4 +34,5 @@ protected:
 public:
 	afx_msg void OnModalPaint();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	BOOL toggle;
 };
