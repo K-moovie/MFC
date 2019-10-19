@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YHKimEx5_3", "YHKimEx5_3.vcxproj", "{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Debug|x64.ActiveCfg = Debug|x64
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Debug|x64.Build.0 = Debug|x64
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Debug|x86.ActiveCfg = Debug|Win32
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Debug|x86.Build.0 = Debug|Win32
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Release|x64.ActiveCfg = Release|x64
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Release|x64.Build.0 = Release|x64
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Release|x86.ActiveCfg = Release|Win32
+		{EFAA33BD-B42D-4477-8FD2-02D2CBB090DF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CE3A321-EBE8-4F91-8D97-367BD1E40232}
+	EndGlobalSection
+EndGlobal
