@@ -186,6 +186,6 @@ void CYHKimEx54Dlg::OnRButtonDown(UINT nFlags, CPoint point)
 		ellipse = TRUE;
 	if (ellipse) {
 		Invalidate();
-		count--;
+		count = 0;
 	}
 }
