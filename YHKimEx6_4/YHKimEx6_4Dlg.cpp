@@ -110,7 +110,7 @@ BOOL CYHKimEx64Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	m_strName = "lacalhost";
+	m_strName = "localhost";
 	m_iType = 0;
 	UpdateData(FALSE);
 	m_Csocket.SetParent(this);
