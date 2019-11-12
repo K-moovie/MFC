@@ -225,9 +225,9 @@ void CYHKimEx64Dlg::OnConnect() {
 
 void CYHKimEx64Dlg::OnClose() {
 	m_Csocket.Close();
-	GetDlgItem(IDC_BCIRCLE)->EnableWindow(TRUE);
-	GetDlgItem(IDC_BRECT)->EnableWindow(TRUE);
-	GetDlgItem(IDC_BLINE)->EnableWindow(TRUE);
+	GetDlgItem(IDC_BCIRCLE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BRECT)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BLINE)->EnableWindow(FALSE);
 
 	if (m_iType == 0)
 	{
@@ -263,7 +263,7 @@ void CYHKimEx64Dlg::OnBnClickedBconnect()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
-	m_Ssocket.Create(4000);
+	m_Ssocket.Create();
 	m_Ssocket.Connect(m_strName,4000);
 }
 
