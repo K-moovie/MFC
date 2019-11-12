@@ -240,6 +240,35 @@ void CYHKimEx64Dlg::OnClose() {
 		GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
 	}
 }
+
+void CYHKimEx64Dlg::OnReceive() {
+	char *pBuf = new char[1025];
+	int iBufSize = 1024;
+	int iRcvd;
+	iRcvd = m_Csocket.Receive(pBuf, iBufSize);
+	if (iRcvd == SOCKET_ERROR)
+	{
+	}
+	else
+	{
+		pBuf[iRcvd - 1] = NULL;
+		if (strcmp(pBuf, "circle") == 0)
+			m_iPaintType = 1;
+		else if (strcmp(pBuf, "rect") == 0)
+			m_iPaintType = 2;
+		else if (strcmp(pBuf, "line") == 0)
+			m_iPaintType = 3;
+		else
+			m_iPaintType = 0;
+	}
+
+	if (m_iPaintType > 0)
+	{
+		Invalidate(TRUE);
+	}
+
+}
+
 void CYHKimEx64Dlg::OnSend() {
 
 }
@@ -263,8 +292,11 @@ void CYHKimEx64Dlg::OnBnClickedBconnect()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
-	m_Ssocket.Create();
-	m_Ssocket.Connect(m_strName,4000);
+	UpdateData(TRUE);
+	m_Csocket.Create();
+	m_Csocket.Connect(m_strName, 4000);
+	//m_Ssocket.Create();
+	//m_Ssocket.Connect(m_strName,4000);
 }
 
 
@@ -277,7 +309,7 @@ void CYHKimEx64Dlg::OnBnClickedBcircle()
 
 	iSent = m_Csocket.Send(LPCTSTR(strMsg), iLen);
 	if (iSent == SOCKET_ERROR) {
-		MessageBox(_T("error"));
+		AfxMessageBox(_T("원 전송 오류"));
 	}
 }
 
@@ -286,12 +318,12 @@ void CYHKimEx64Dlg::OnBnClickedBrect()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int iSent;
-	CString strMsg =_T("rect");
-	int iLen = strMsg.GetLength()+ 1;
+	const char* strMsg("rect");
+	int iLen = strlen(strMsg) + 1;
 
 	iSent = m_Csocket.Send(LPCTSTR(strMsg), iLen);
 	if (iSent == SOCKET_ERROR) {
-		MessageBox(_T("전송에 실패했습니다. 다시 전송해주십시오"));
+		AfxMessageBox(_T("사각형 전송 오류"));
 	}
 }
 
@@ -300,42 +332,13 @@ void CYHKimEx64Dlg::OnBnClickedBline()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int iSent;
-	CString strMsg = _T("line");
-	int iLen = strMsg.GetLength() + 1;
+	const char* strMsg("line");
+	int iLen = strlen(strMsg) + 1;
 
 	iSent = m_Csocket.Send(LPCTSTR(strMsg), iLen);
 	if (iSent == SOCKET_ERROR) {
-		MessageBox(_T("전송에 실패했습니다. 다시 전송해주십시오"));
+		AfxMessageBox(_T("선 전송 오류"));
 	}
 }
 
 
-void CYHKimEx64Dlg::OnReceive() {
-	char *pBuf = new char[1025];
-	int iBufSize = 1024;
-	int iRcvd;
-	iRcvd = m_Csocket.Receive(pBuf, iBufSize);
-	if (iRcvd == SOCKET_ERROR)
-	{
-
-	}
-	else
-	{
-		pBuf[iRcvd - 1] = NULL;
-		if (strcmp(pBuf, "circle") == 0)
-			m_iPaintType = 1;
-		else if (strcmp(pBuf, "rect") == 0)
-			m_iPaintType = 2;
-		else if (strcmp(pBuf, "line") == 0)
-			m_iPaintType = 3;
-		else
-			m_iPaintType = 0;
-
-	}
-
-	if (m_iPaintType > 0)
-	{
-		Invalidate(TRUE);
-	}
-
-}
