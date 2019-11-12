@@ -1,20 +1,20 @@
 ﻿
-// YHKim6_5Dlg.h: 헤더 파일
+// ServerDlg.h: 헤더 파일
 //
 
 #pragma once
 
 
-// CYHKim65Dlg 대화 상자
-class CYHKim65Dlg : public CDialogEx
+// CServerDlg 대화 상자
+class CServerDlg : public CDialogEx
 {
 // 생성입니다.
 public:
-	CYHKim65Dlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
+	CServerDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_YHKIM6_5_DIALOG };
+	enum { IDD = IDD_SERVER_DIALOG };
 #endif
 
 	protected:
@@ -31,4 +31,10 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CListBox m_ListBox;
+private:
+	CString m_ServerIP;
+	CString m_ClientIP;
+	int m_CallNo;
 };

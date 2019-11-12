@@ -1,10 +1,10 @@
 ﻿
-// YHKim6_5Dlg.cpp: 구현 파일
+// ServerDlg.cpp: 구현 파일
 //
 
 #include "stdafx.h"
-#include "YHKim6_5.h"
-#include "YHKim6_5Dlg.h"
+#include "Server.h"
+#include "ServerDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -45,31 +45,35 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CYHKim65Dlg 대화 상자
+// CServerDlg 대화 상자
 
 
 
-CYHKim65Dlg::CYHKim65Dlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_YHKIM6_5_DIALOG, pParent)
+CServerDlg::CServerDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_SERVER_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_ServerIP = _T("");
+	m_ClientIP = _T("");
+	m_CallNo = 0;
 }
 
-void CYHKim65Dlg::DoDataExchange(CDataExchange* pDX)
+void CServerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST_MSG, m_ListBox);
 }
 
-BEGIN_MESSAGE_MAP(CYHKim65Dlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CServerDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 END_MESSAGE_MAP()
 
 
-// CYHKim65Dlg 메시지 처리기
+// CServerDlg 메시지 처리기
 
-BOOL CYHKim65Dlg::OnInitDialog()
+BOOL CServerDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -99,11 +103,13 @@ BOOL CYHKim65Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	m_callNo = 1;
+	WSADATA wsaData;
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
-void CYHKim65Dlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CServerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -120,7 +126,7 @@ void CYHKim65Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
-void CYHKim65Dlg::OnPaint()
+void CServerDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -147,7 +153,7 @@ void CYHKim65Dlg::OnPaint()
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
-HCURSOR CYHKim65Dlg::OnQueryDragIcon()
+HCURSOR CServerDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }

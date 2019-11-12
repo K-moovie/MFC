@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{6D0CF26B-640A-4342-8FA4-8F41BD8C1F67}</ProjectGuid>
+    <ProjectGuid>{759F894E-9AF8-46CA-8D9F-981281E2A085}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>YHKim65</RootNamespace>
+    <RootNamespace>Server</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -184,29 +184,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="YHKim6_5.h" />
-    <ClInclude Include="YHKim6_5Dlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="YHKim6_5.cpp" />
-    <ClCompile Include="YHKim6_5Dlg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="YHKim65.rc" />
+    <ResourceCompile Include="Server.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\YHKim65.rc2" />
+    <None Include="res\Server.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\YHKim6_5.ico" />
+    <Image Include="res\Server.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,26 +1,26 @@
 ﻿
-// YHKim6_5.cpp: 응용 프로그램에 대한 클래스 동작을 정의합니다.
+// YHKimEx6_4.cpp: 응용 프로그램에 대한 클래스 동작을 정의합니다.
 //
 
 #include "stdafx.h"
-#include "YHKim6_5.h"
-#include "YHKim6_5Dlg.h"
+#include "YHKimEx6_4.h"
+#include "YHKimEx6_4Dlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CYHKim65App
+// CYHKimEx64App
 
-BEGIN_MESSAGE_MAP(CYHKim65App, CWinApp)
+BEGIN_MESSAGE_MAP(CYHKimEx64App, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// CYHKim65App 생성
+// CYHKimEx64App 생성
 
-CYHKim65App::CYHKim65App()
+CYHKimEx64App::CYHKimEx64App()
 {
 	// 다시 시작 관리자 지원
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -30,14 +30,14 @@ CYHKim65App::CYHKim65App()
 }
 
 
-// 유일한 CYHKim65App 개체입니다.
+// 유일한 CYHKimEx64App 개체입니다.
 
-CYHKim65App theApp;
+CYHKimEx64App theApp;
 
 
-// CYHKim65App 초기화
+// CYHKimEx64App 초기화
 
-BOOL CYHKim65App::InitInstance()
+BOOL CYHKimEx64App::InitInstance()
 {
 	// 응용 프로그램 매니페스트가 ComCtl32.dll 버전 6 이상을 사용하여 비주얼 스타일을
 	// 사용하도록 지정하는 경우, Windows XP 상에서 반드시 InitCommonControlsEx()가 필요합니다.
@@ -76,7 +76,7 @@ BOOL CYHKim65App::InitInstance()
 	// 적절한 내용으로 수정해야 합니다.
 	SetRegistryKey(_T("로컬 응용 프로그램 마법사에서 생성된 응용 프로그램"));
 
-	CYHKim65Dlg dlg;
+	CYHKimEx64Dlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
