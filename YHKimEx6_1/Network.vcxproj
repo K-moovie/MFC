@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{5014CD73-C15B-4B6D-85DC-B11BEAACEB04}</ProjectGuid>
+    <ProjectGuid>{79D15D88-3DB2-404A-97F4-F22285EFCABB}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>YHKimEx64</RootNamespace>
+    <RootNamespace>Network</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -184,31 +184,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CMySocket.h" />
+    <ClInclude Include="IntroDlg.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="NetworkDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="YHKimEx6_4.h" />
-    <ClInclude Include="YHKimEx6_4Dlg.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMySocket.cpp" />
+    <ClCompile Include="IntroDlg.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="NetworkDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="YHKimEx6_4.cpp" />
-    <ClCompile Include="YHKimEx6_4Dlg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="YHKimEx64.rc" />
+    <ResourceCompile Include="Network.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\YHKimEx64.rc2" />
+    <None Include="res\Network.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\YHKimEx6_4.ico" />
+    <Image Include="res\Network.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

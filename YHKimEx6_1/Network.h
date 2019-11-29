@@ -1,5 +1,5 @@
 ﻿
-// YHKimEx6_4.h: PROJECT_NAME 응용 프로그램에 대한 주 헤더 파일입니다.
+// Network.h: PROJECT_NAME 응용 프로그램에 대한 주 헤더 파일입니다.
 //
 
 #pragma once
@@ -9,26 +9,25 @@
 #endif
 
 #include "resource.h"		// 주 기호입니다.
-#include "CMySocket.h"
 
-// CYHKimEx64App:
-// 이 클래스의 구현에 대해서는 YHKimEx6_4.cpp을(를) 참조하세요.
+
+
+// CNetworkApp:
+// 이 클래스의 구현에 대해서는 Network.cpp을(를) 참조하세요.
 //
 
-class CYHKimEx64App : public CWinApp
+class CNetworkApp : public CWinApp
 {
 public:
-	CYHKimEx64App();
+	CNetworkApp();
 
 // 재정의입니다.
 public:
 	virtual BOOL InitInstance();
-
-
 
 // 구현입니다.
 
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CYHKimEx64App theApp;
+extern CNetworkApp theApp;

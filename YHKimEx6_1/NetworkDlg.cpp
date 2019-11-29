@@ -1,16 +1,18 @@
 ﻿
-// YHKimEx6_4Dlg.cpp: 구현 파일
+// NetworkDlg.cpp: 구현 파일
 //
 
 #include "stdafx.h"
-#include "YHKimEx6_4.h"
-#include "YHKimEx6_4Dlg.h"
+#include "Network.h"
+#include "NetworkDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+CMySocket CNetworkDlg::m_Csocket;
+CMySocket CNetworkDlg::m_Ssocket;
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -45,45 +47,45 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CYHKimEx64Dlg 대화 상자
+// CNetworkDlg 대화 상자
 
 
 
-CYHKimEx64Dlg::CYHKimEx64Dlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_YHKIMEX6_4_DIALOG, pParent)
-	, m_iType(0)
+CNetworkDlg::CNetworkDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_NETWORK_DIALOG, pParent)
 	, m_strName(_T(""))
-	, m_strMessage(_T(""))
+	, m_iType(FALSE)
+	, m_input(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CYHKimEx64Dlg::DoDataExchange(CDataExchange* pDX)
+void CNetworkDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Radio(pDX, IDC_RSERVER, m_iType);
 	DDX_Text(pDX, IDC_ESERVERNAME, m_strName);
-	DDX_Text(pDX, IDC_EMSG, m_strMessage);
-	DDX_Control(pDX, IDC_LSENT, m_ctlSent);
-	DDX_Control(pDX, IDC_LRECVD, m_ctlRecvd);
+	//  DDX_Radio(pDX, IDC_RSERVER, m_iType);
+	//  DDX_Radio(pDX, IDC_RSERVER, m_iType);
+	DDX_Radio(pDX, IDC_RSERVER, m_iType);
+	DDX_Text(pDX, IDC_EDIT1, m_input);
 }
 
-BEGIN_MESSAGE_MAP(CYHKimEx64Dlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CNetworkDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_RSERVER, &CYHKimEx64Dlg::OnRType)
-	ON_BN_CLICKED(IDC_RCLIENT, &CYHKimEx64Dlg::OnRType)
-	ON_BN_CLICKED(IDC_BLISTEN, &CYHKimEx64Dlg::OnBnClickedBlisten)
-	ON_BN_CLICKED(IDC_BCONNECT, &CYHKimEx64Dlg::OnBnClickedBconnect)
-
-	ON_BN_CLICKED(IDC_BSEND, &CYHKimEx64Dlg::OnBnClickedBsend)
+	ON_BN_CLICKED(IDC_RSERVER, &CNetworkDlg::OnRType)
+	ON_BN_CLICKED(IDC_RCLIENT, &CNetworkDlg::OnRType)
+	ON_BN_CLICKED(IDC_BLISTEN, &CNetworkDlg::OnBnClickedBlisten)
+	ON_BN_CLICKED(IDC_BDISCON, &CNetworkDlg::OnBnClickedBdiscon)
+	ON_BN_CLICKED(IDC_BCONNECT, &CNetworkDlg::OnBnClickedBconnect)
+	ON_BN_CLICKED(IDC_BENTER, &CNetworkDlg::OnBnClickedBenter)
 END_MESSAGE_MAP()
 
 
-// CYHKimEx64Dlg 메시지 처리기
+// CNetworkDlg 메시지 처리기
 
-BOOL CYHKimEx64Dlg::OnInitDialog()
+BOOL CNetworkDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -114,7 +116,6 @@ BOOL CYHKimEx64Dlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	m_strName = "localhost";
-	m_iType = 0;
 	UpdateData(FALSE);
 	m_Csocket.SetParent(this);
 	m_Ssocket.SetParent(this);
@@ -122,7 +123,7 @@ BOOL CYHKimEx64Dlg::OnInitDialog()
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
-void CYHKimEx64Dlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CNetworkDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -139,7 +140,7 @@ void CYHKimEx64Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
-void CYHKimEx64Dlg::OnPaint()
+void CNetworkDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -160,77 +161,65 @@ void CYHKimEx64Dlg::OnPaint()
 	}
 	else
 	{
+		CClientDC dc(this);
+
 		CDialogEx::OnPaint();
-		if (m_iPaintType > 0)
-		{
-			CClientDC dc(this);
-			switch (m_iPaintType)
-			{
-			case 1:
-				dc.Ellipse(250 - 100, 300 - 100, 250 + 100, 300 + 100);
-				break;
-			case 2:
-				dc.Rectangle(250 - 100, 300 - 100, 250 + 100, 300 + 100);
-				break;
-			case 3:
-				dc.MoveTo(250 - 100, 300);
-				dc.LineTo(250 + 100, 300);
-				break;
-			}
+		if (m_iPaintType == 1)
+			dc.Rectangle(250 - 100, 300 - 100, 250 + 100, 300 + 100);
+		else if (m_iPaintType == 2)
+			dc.Ellipse(250 - 100, 300 - 100, 250 + 100, 300 + 100);
+		else if (m_iPaintType == 3) {
+			dc.MoveTo(250 - 100, 300);
+			dc.LineTo(250 + 100, 300);
 		}
 	}
 }
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
-HCURSOR CYHKimEx64Dlg::OnQueryDragIcon()
+HCURSOR CNetworkDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
 
 
-
-
-void CYHKimEx64Dlg::OnRType()
+void CNetworkDlg::OnRType()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	if (m_iType == 0)
+	if (!m_iType)
 	{
 		GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
 		GetDlgItem(IDC_BLISTEN)->EnableWindow(TRUE);
 	}
-	else
+	else if(m_iType)
 	{
+		
 		GetDlgItem(IDC_BCONNECT)->EnableWindow(TRUE);
 		GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
 	}
 }
 
-void CYHKimEx64Dlg::OnAccept() {
+void CNetworkDlg::OnAccept() {
 	m_Ssocket.Accept(m_Csocket);
 	GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
-	GetDlgItem(IDC_BCIRCLE)->EnableWindow(TRUE);
-	GetDlgItem(IDC_BRECT)->EnableWindow(TRUE);
-	GetDlgItem(IDC_BLINE)->EnableWindow(TRUE);
+	GetDlgItem(IDC_NEXT)->EnableWindow(TRUE);
+	GetDlgItem(IDC_BENTER)->EnableWindow(TRUE);
 }
 
-void CYHKimEx64Dlg::OnConnect() {
-	
+void CNetworkDlg::OnConnect() {
+
 	GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
-	GetDlgItem(IDC_BCIRCLE)->EnableWindow(TRUE);
-	GetDlgItem(IDC_BRECT)->EnableWindow(TRUE);
-	GetDlgItem(IDC_BLINE)->EnableWindow(TRUE);
+	GetDlgItem(IDC_NEXT)->EnableWindow(TRUE);
+	GetDlgItem(IDC_BENTER)->EnableWindow(TRUE);
 }
 
-void CYHKimEx64Dlg::OnClose() {
+void CNetworkDlg::OnClose() {
 	m_Csocket.Close();
-	GetDlgItem(IDC_BCIRCLE)->EnableWindow(FALSE);
-	GetDlgItem(IDC_BRECT)->EnableWindow(FALSE);
-	GetDlgItem(IDC_BLINE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_NEXT)->EnableWindow(FALSE);
 
 	if (m_iType == 0)
 	{
@@ -244,40 +233,37 @@ void CYHKimEx64Dlg::OnClose() {
 	}
 }
 
-void CYHKimEx64Dlg::OnReceive() {
+void CNetworkDlg::OnReceive() {
 	char *pBuf = new char[1025];
 	int iBufSize = 1024;
 	int iRcvd;
 	iRcvd = m_Csocket.Receive(pBuf, iBufSize);
+	CString str;
+	str.Format(_T("%d"), iRcvd);
 	if (iRcvd == SOCKET_ERROR)
 	{
 	}
 	else
 	{
 		pBuf[iRcvd - 1] = NULL;
-		if (strcmp(pBuf, "C") == 0)
+		if (strcmp(pBuf, "R") == 0)
 			m_iPaintType = 1;
-		else if (strcmp(pBuf, "R") == 0)
+		else if(strcmp(pBuf, "C") == 0)
 			m_iPaintType = 2;
 		else if (strcmp(pBuf, "L") == 0)
 			m_iPaintType = 3;
-		else
+		else 
 			m_iPaintType = 0;
-	}
-
-	if (m_iPaintType > 0)
-	{
 		Invalidate(TRUE);
 	}
-}
-
-void CYHKimEx64Dlg::OnSend() {
 
 }
 
+void CNetworkDlg::OnSend() {
 
+}
 
-void CYHKimEx64Dlg::OnBnClickedBlisten()
+void CNetworkDlg::OnBnClickedBlisten()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
@@ -287,65 +273,34 @@ void CYHKimEx64Dlg::OnBnClickedBlisten()
 }
 
 
+void CNetworkDlg::OnBnClickedBdiscon()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Csocket.Close();
+	m_Ssocket.Close();
+}
 
 
-void CYHKimEx64Dlg::OnBnClickedBconnect()
+void CNetworkDlg::OnBnClickedBconnect()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	GetDlgItem(IDC_BCONNECT)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BLISTEN)->EnableWindow(FALSE);
+	GetDlgItem(IDC_NEXT)->EnableWindow(TRUE);
 	UpdateData(TRUE);
 	m_Csocket.Create();
 	m_Csocket.Connect(m_strName, 4000);
-	//m_Ssocket.Create();
-	//m_Ssocket.Connect(m_strName,4000);
 }
 
-
-
-
-
-
-
-
-
-void CYHKimEx64Dlg::OnBnClickedBsend()
+void CNetworkDlg::OnBnClickedBenter()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	int iSent; int iLen; 
-	UpdateData(TRUE); 
-	if (m_strMessage.Compare(_T("R"))) {
-		iLen = m_strMessage.GetLength(); 
-		iSent = m_Csocket.Send(LPCTSTR(m_strMessage), sizeof(TCHAR)*(iLen + 1));
-		if (iSent == SOCKET_ERROR) { 
-			MessageBox(_T("error")); 
-		}
-		else { 
-			m_ctlSent.AddString(m_strMessage);
-			UpdateData(FALSE); 
-		}
-	}
-	else if (m_strMessage.Compare(_T("C"))) {
-		iLen = m_strMessage.GetLength();
-			iSent = m_Csocket.Send(LPCTSTR(m_strMessage), sizeof(TCHAR)*(iLen + 1));
-			if (iSent == SOCKET_ERROR) {
-				MessageBox(_T("error"));
-			}
-			else {
-				m_ctlSent.AddString(m_strMessage);
-					UpdateData(FALSE);
-			}
-	}
-	else if (m_strMessage.Compare(_T("L"))) {
-		iLen = m_strMessage.GetLength();
-			iSent = m_Csocket.Send(LPCTSTR(m_strMessage), sizeof(TCHAR)*(iLen + 1));
-			if (iSent == SOCKET_ERROR) {
-				MessageBox(_T("error"));
-			}
-			else {
-				m_ctlSent.AddString(m_strMessage);
-					UpdateData(FALSE);
-			}
-	}
+	UpdateData(TRUE);
+	int iSent;
+	int iLen = m_input.GetLength();
 
+	iSent = m_Csocket.Send(m_input, iLen+1);
+	if (iSent == SOCKET_ERROR) {
+		AfxMessageBox(_T("에러"));
+	}
 }

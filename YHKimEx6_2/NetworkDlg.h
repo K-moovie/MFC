@@ -1,20 +1,20 @@
 ﻿
-// YHKimEx6_4Dlg.h: 헤더 파일
+// NetworkDlg.h: 헤더 파일
 //
 
 #pragma once
+#include "CMySocket.h"
 
-
-// CYHKimEx64Dlg 대화 상자
-class CYHKimEx64Dlg : public CDialogEx
+// CNetworkDlg 대화 상자
+class CNetworkDlg : public CDialogEx
 {
 // 생성입니다.
 public:
-	CYHKimEx64Dlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
+	CNetworkDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_YHKIMEX6_4_DIALOG };
+	enum { IDD = IDD_NETWORK_DIALOG };
 #endif
 
 	protected:
@@ -32,21 +32,23 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	CMySocket m_Csocket;
-	CMySocket m_Ssocket;
-	int m_iType;
 	CString m_strName;
 	afx_msg void OnRType();
-	int m_iPaintType;
+	static CMySocket m_Csocket;
+	static CMySocket m_Ssocket;
+
 	void OnAccept();
 	void OnConnect();
 	void OnClose();
 	void OnReceive();
 	void OnSend();
+
 	afx_msg void OnBnClickedBlisten();
+	afx_msg void OnBnClickedBdiscon();
 	afx_msg void OnBnClickedBconnect();
-	CString m_strMessage;
-	CListBox m_ctlSent;
-	CListBox m_ctlRecvd;
-	afx_msg void OnBnClickedBsend();
+	BOOL m_iType;
+	int m_x;
+	int m_y;
+	afx_msg void OnBnClickedBenter();
+	CString m_input;
 };
